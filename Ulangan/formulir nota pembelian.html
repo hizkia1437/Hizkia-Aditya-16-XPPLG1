@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+
+        body {
+            background: url(source.jpg)no-repeat fixed;
+            background-size: cover;
+        }
+        .container {
+        margin: auto;
+        background-color: navy;
+        width: 180vh;
+        border: 2px dashed white;
+        border-radius: 20px;
+      }
+        .main h2 {
+        text-align: center;
+        border-bottom: 2px dashed;
+        color: white;
+        padding: 25px;
+        margin-left: 70px;
+        margin-right: 70px;
+      }
+        .second {
+        margin-left: 70px;
+      }
+        label {
+        color: white;
+        text-align: right;
+      }
+        .imput {
+        width: 160vh;
+      }
+        .input {
+        width: 160vh;
+      }
+        .ibnup {
+        width: 124.5vh;
+        margin-left: 30px;
+      }
+        .third {
+        display: flex;
+        justify-content: center;
+      }
+        .third button {
+        width: 100px;
+        height: 25px;
+        margin: 10px;
+      }
+        .right {
+        width: 124.4vh;
+      }
+        #d {
+        margin-left: 27.8vh;
+      }
+        #c {
+        margin-left: 26.3vh;
+      }
+        #b {
+        margin-left: 20.5vh;
+      }
+        #a {
+        margin-left: 21vh;
+      }
+        @media (max-width: 900px) {
+        .container {
+          width: 50vh;
+          margin: auto;
+        }
+        .main h2 {
+          padding: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        .second {
+          margin-left: 10px;
+        }
+        .imput {
+          width: 46vh;
+        }
+        .ibnup {
+          margin: 0;
+          width: 46vh;
+        }
+        .right {
+          width: 30vh;
+        }
+        #a {
+          margin-left: 2vh;
+        }
+        #b {
+          margin-left: 1.5vh;
+        }
+        #c {
+          margin-left: 7.3vh;
+        }
+        #d {
+          margin-left: 8.7vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main"><h2>Formulir Nota Pembelian</h2></div>
+      <div class="second">
+        <label class="text">Nama Pembeli</label> <br />
+        <input type="text" class="imput" placeholder="Masukan nama pembeli"/>
+        <br /><br />
+        <label>Alamat</label> <br />
+        <textarea name="Alamat" class="imput" placeholder="Masukan alamat tempat tinggal anda"></textarea>
+        <br /><br />
+        <label class="text">Kode Pos</label> <br />
+        <input type="number" class="imput" placeholder="Masukan kode pos anda"/>
+        <br /><br />
+        <label class="text">Tanggal Beli</label> <br />
+        <input type="date" class="imput" placeholder="Masukan tanggal dimana anda membeli layanan kami"/>
+        <br><br>
+        <label class="text">Pembayaran</label> <br>
+        <input type="radio" name="pembayaran"> <label>Lunas</label>
+        <input type="radio" name="pembayaran"> <label>Belum bayar</label>
+        <input type="radio" name="pembayaran"> <label>DP</label>
+        <input type="text" name="pembayaran" placeholder="ketikan angka uang DP" class="ibnup">
+        <br /><br />
+        <label class="text">Jenis pembayaran</label> <br />
+        <select name="text" class="imput"> 
+            <option value="tunai">tunai</option>
+            <option value="transfer">transfer</option>
+        </select>
+        <br> <br>
+        <label class="text">Menu</label> <br>
+        <input type="checkbox"> <label>Mie goreng</label> <input type="text" class="right" id="a" placeholder="Masukan jumlah porsi"> <br> <br>
+        <input type="checkbox"> <label>Nasi goreng</label> <input type="text" class="right" id="b" placeholder="Masukan jumlah porsi"> <br> <br>
+        <input type="checkbox"> <label>Jeruk</label> <input type="text" class="right" id="c" placeholder="Masukan jumlah porsi"><br> <br>
+        <input type="checkbox"> <label>Teh</label> <input type="text" class="right" id="d" placeholder="Masukan jumlah porsi"> <br> <br>
+        <div class="third">
+            <button>Clear</button>
+            <button>Send</button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </body>
+</html>
