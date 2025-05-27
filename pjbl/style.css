@@ -1,0 +1,235 @@
+/* === STYLE LOGIN & UMUM === */
+body {
+    margin: 0;
+    font-family: 'MuseoModerno', sans-serif;
+    background-color: #f8f8f8;
+  }
+  
+  .header {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 16px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .logo-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .logo-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #301932;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    overflow: hidden;
+  }
+  
+  .nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav a {
+    color: #4B5563;
+    text-decoration: none;
+  }
+  
+  .nav a:hover {
+    color: #301932;
+  }
+  
+  .user-icon {
+    font-size: 24px;
+    color: #4B5563;
+  }
+  
+  .banner {
+    height: 48px;
+    background-color: #301932;
+  }
+  
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  .login-container {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .left-box,
+  .right-box {
+    width: 50%;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  
+  .left-box {
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo-img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .right-box h2 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #374151;
+  }
+  
+  input {
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input:focus {
+    border-color: #301932;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #1F2937;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #374151;
+  }
+  
+  .register-link {
+    margin-top: 16px;
+    text-align: center;
+  }
+  
+  .register-link a {
+    font-size: 14px;
+    color: #301932;
+    text-decoration: none;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  /* === STYLE TAMBAHAN UNTUK SIGNUP === */
+  .form-container {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 40px auto;
+  }
+  
+  .form-section {
+    width: 50%;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  
+  .logo-section {
+    background-color: #f0f0f0;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-group input:focus {
+    border-color: #301932;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .btn {
+    padding: 10px;
+    background-color: #1F2937;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #374151;
+  }
+  
+  .login-link {
+    margin-top: 16px;
+    text-align: center;
+  }
+  
+  .login-link a {
+    font-size: 14px;
+    color: #301932;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
