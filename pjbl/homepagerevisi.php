@@ -901,6 +901,6 @@
             const triggerHeight = window.innerHeight * 0.8;
         }
 
-            missionCards.forEach(card) => {
-                const cardTop = card.getBoundingClientRect().top
-            }
+           missionCards.forEach((card) => {
+            const cardTop = card.getBoundingClientRect().top;
+        });
