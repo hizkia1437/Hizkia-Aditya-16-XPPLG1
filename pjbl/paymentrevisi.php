@@ -597,17 +597,17 @@
                 </form>
             </div>
 
+
+
+
             <!-- Right Section - Order Summary -->
             <div class="order-section">
                 <div class="section-title"> Total Pesanan</div>
-                
-                <div class="order-summary">
-                    <p> Detail pesanan akan muncul di sini setelah Anda memilih menu</p>
-                </div>
 
+                <div id="item-list" class="order-summary"></div>
                 <div class="summary-row">
                     <span class="summary-label">Subtotal</span>
-                    <div class="summary-value">IDR 0</div>
+                    <h3><span class="summary-value" id="sub-total-amount"></span></h3>
                 </div>
 
                 <div class="summary-row">
@@ -616,18 +616,24 @@
                 </div>
 
                 <div class="summary-row">
-                    <span class="summary-label"> Total</span>
-                    <div class="summary-value">IDR 0</div>
+                    <span class="summary-label">Total</span>
+                    <div class="summary-value" id="ttotal">IDR 0</div>
                 </div>
+
 
                 <div class="order-id-row">
                     <span class="id-label"> Order ID</span>
-                    <div class="id-value">#000000</div>
+                    <div class="id-value"></div>
                 </div>
 
                 <button type="button" class="confirm-button" onclick="kirimPesanan()">
                      Konfirmasi Pesanan
                 </button>
+                </div>
+                
+                
+
+                
             </div>
         </div>
     </div>
@@ -647,39 +653,38 @@
     
     <script>
         
-        
+        window.addEventListener('DOMContentLoaded', () => { 
+    const orderId = localStorage.getItem('orderId');
+    const selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
 
-        
-        // Order confirmation function
-        function kirimPesanan() {
-            // Get form data
-            const form = document.getElementById('orderForm');
-            const formData = new FormData(form);
-            
-            // Basic validation
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = '#EF4444';
-                } else {
-                    field.style.borderColor = '#E5E7EB';
-                }
-            });
-            
-            if (!isValid) {
-                alert('Mohon lengkapi semua field yang diperlukan!');
-                return;
-            }
-            
-            // Generate random order ID
-            const orderId = '#' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            document.querySelector('.id-value').textContent = orderId;
-            
-            alert(`Pesanan berhasil dikonfirmasi!\nOrder ID: ${orderId}\n\nTerima kasih atas pesanan Anda!`);
-        }
+    // Tampilkan ID Pesanan
+    if (orderId) {
+        document.querySelector('.id-value').textContent = orderId;
+    }
+
+    // Tampilkan daftar item yang dipilih
+    const itemListContainer = document.getElementById('item-list');
+    let total = 0;
+
+    selectedItems.forEach(item => {
+        const itemTotal = item.quantity * item.price;
+        total += itemTotal;
+
+        const itemHTML = `
+            <div class="item">
+                <div class="item-name">${item.name}</div>
+                <div class="item-qty-price">${item.quantity} × IDR ${item.price.toLocaleString()}</div>
+                <div class="item-total">IDR ${itemTotal.toLocaleString()}</div>
+            </div>
+        `;
+
+        itemListContainer.innerHTML += itemHTML;
+    });
+
+    // Tampilkan subtotal
+    document.getElementById('sub-total-amount').textContent = 'IDR ' + total.toLocaleString();
+
+});
 
         // Set minimum date to today
         document.addEventListener('DOMContentLoaded', function() {
@@ -737,10 +742,48 @@
             const ongkir = Math.ceil(distance * 2000);
 
             document.getElementById("ongkir").value = ongkir;
-            document.getElementById("ongkir-display").innerText = `Ongkir: Rp ${ongkir.toLocaleString()}`;
+            document.getElementById("ongkir-display").innerText = `IDR ${ongkir.toLocaleString()}`;
+
+            // Ambil nilai subtotal dari elemen yang sudah diisi sebelumnya
+        const subtotalText = document.getElementById('sub-total-amount').textContent.replace(/[^0-9]/g, '');
+        const subtotal = parseInt(subtotalText) || 0;
+
+        // Hitung total baru dan tampilkan ke elemen dengan id="ttotal"
+        const total2 = subtotal + ongkir;
+        document.getElementById("ttotal").innerText = `IDR ${total2.toLocaleString()}`;
+    
+
         }
         }
-    </script>
+        // Order confirmation function
+        function kirimPesanan() {
+            // Get form data
+            const form = document.getElementById('orderForm');
+            const formData = new FormData(form);
+            
+            // Basic validation
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#EF4444';
+                } else {
+                    field.style.borderColor = '#E5E7EB';
+                }
+            });
+            
+            if (!isValid) {
+                alert('Mohon lengkapi semua field yang diperlukan!');
+                return;
+            }
+            
+            
+            
+            alert(`Pesanan berhasil dikonfirmasi!\nOrder ID: ${orderId}\n\nTerima kasih atas pesanan Anda!`);
+        }
+</script>
 
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCymXsxxOwZHOzPhpnCA6LX05KmESPXdrI&libraries=geometry"></script>

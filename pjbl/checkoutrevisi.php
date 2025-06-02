@@ -671,9 +671,10 @@
                     </div>
                 </div>
                 
-                <button class="checkout-btn" id="checkoutBtn" disabled>
-                    Proceed to Checkout
-                </button>
+                <button class="checkout-btn" id="checkout-btn" disabled>
+            Proceed to Checkout
+</button>
+
             </div>
         </div>
     </div>
@@ -681,47 +682,7 @@
     <script>
         let cart = {};
 
-        function increase(button) {
-            const controls = button.parentElement;
-            const display = controls.querySelector('.qty-display');
-            const itemName = button.dataset.name;
-            const price = parseInt(button.dataset.price);
-            
-            const currentQty = parseInt(display.textContent);
-            const newQty = currentQty + 1;
-            display.textContent = newQty;
-            
-            // Update cart
-            if (!cart[itemName]) {
-                cart[itemName] = { quantity: 0, price: price };
-            }
-            cart[itemName].quantity = newQty;
-            
-            updateDisplay();
-        }
-
-        function decrease(button) {
-            const controls = button.parentElement;
-            const display = controls.querySelector('.qty-display');
-            const itemName = button.dataset.name;
-            
-            const currentQty = parseInt(display.textContent);
-            if (currentQty > 0) {
-                const newQty = currentQty - 1;
-                display.textContent = newQty;
-                
-                // Update cart
-                if (cart[itemName]) {
-                    if (newQty === 0) {
-                        delete cart[itemName];
-                    } else {
-                        cart[itemName].quantity = newQty;
-                    }
-                }
-                
-                updateDisplay();
-            }
-        }
+       
 
         function updateDisplay() {
             updateCartBadge();
@@ -745,62 +706,113 @@
         }
 
         function updateOrderSummary() {
-            const orderSummary = document.getElementById('orderSummary');
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            
-            if (Object.keys(cart).length === 0) {
-                orderSummary.innerHTML = `
-                    <div class="empty-cart">
-                        <div class="empty-cart-icon">🛒</div>
-                        <p>Your cart is empty<br>Add items to get started</p>
-                    </div>
-                `;
-                checkoutBtn.disabled = true;
-                return;
-            }
-            
-            let summaryHTML = '';
-            let total = 0;
-            
-            Object.entries(cart).forEach(([itemName, item]) => {
-                const itemTotal = item.quantity * item.price;
-                total += itemTotal;
-                summaryHTML += `
-                    <div class="order-item">
-                        <div class="order-item-info">
-                            <div class="order-item-name">${itemName}</div>
-                            <div class="order-item-details">${item.quantity} × IDR ${item.price.toLocaleString()}</div>
-                        </div>
-                        <div class="order-item-total">IDR ${itemTotal.toLocaleString()}</div>
-                    </div>
-                `;
-            });
-            
-            summaryHTML += `
-                <div class="order-total">
-                    <span class="total-label">Total</span>
-                    <span class="total-amount">IDR ${total.toLocaleString()}</span>
-                </div>
-            `;
-            
-            orderSummary.innerHTML = summaryHTML;
-            checkoutBtn.disabled = false;
-        }
+    const orderSummary = document.getElementById('orderSummary');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    
+    const items = document.querySelectorAll('.qty-btn[data-name]');
+    const itemMap = new Map();
+    let total = 0;
 
-        // Checkout handler
-        document.getElementById('checkoutBtn').addEventListener('click', function() {
-            if (Object.keys(cart).length > 0) {
-                const total = Object.values(cart).reduce((sum, item) => sum + (item.quantity * item.price), 0);
-                alert(`Thank you for your order!\nTotal: IDR ${total.toLocaleString()}\n\nYour order has been placed successfully.`);
-                
-                // Reset everything
-                cart = {};
-                document.querySelectorAll('.qty-display').forEach(display => {
-                    display.textContent = '0';
-                });
-                updateDisplay();
-            }
-        });
+    items.forEach(button => {
+        const name = button.getAttribute('data-name');
+        const price = parseInt(button.getAttribute('data-price'));
+        const qtyDisplay = button.parentElement.querySelector('.qty-display');
+        const quantity = parseInt(qtyDisplay.textContent);
+
+        if (quantity > 0 && !itemMap.has(name)) {
+            const itemTotal = quantity * price;
+            total += itemTotal;
+            itemMap.set(name, {
+                name,
+                quantity,
+                price,
+                total: itemTotal
+            });
+        }
+    });
+
+    if (itemMap.size === 0) {
+        orderSummary.innerHTML = `
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Your cart is empty<br>Add items to get started</p>
+            </div>
+        `;
+        checkoutBtn.disabled = true;
+        return;
+    }
+
+    let summaryHTML = '';
+    itemMap.forEach(item => {
+        summaryHTML += `
+            <div class="order-item">
+                <div class="order-item-info">
+                    <div class="order-item-name">${item.name}</div>
+                    <div class="order-item-details">${item.quantity} × IDR ${item.price.toLocaleString()}</div>
+                </div>
+                <div class="order-item-total">IDR ${item.total.toLocaleString()}</div>
+            </div>
+        `;
+    });
+
+    summaryHTML += `
+        <div class="order-total">
+            <span class="total-label">Total</span>
+            <span class="total-amount">IDR ${total.toLocaleString()}</span>
+        </div>
+    `;
+
+    orderSummary.innerHTML = summaryHTML;
+    checkoutBtn.disabled = false;
+}
+
+
+// Aktifkan tombol jika item ditambah atau dikurangi
+function increase(btn) {
+    const qtyDisplay = btn.parentElement.querySelector('.qty-display');
+    qtyDisplay.textContent = parseInt(qtyDisplay.textContent) + 1;
+    updateOrderSummary();
+}
+
+function decrease(btn) {
+    const qtyDisplay = btn.parentElement.querySelector('.qty-display');
+    const qty = parseInt(qtyDisplay.textContent);
+    if (qty > 0) {
+        qtyDisplay.textContent = qty - 1;
+    }
+    updateOrderSummary();
+}
+
+
+// Checkout dan simpan ke localStorage
+document.getElementById('checkout-btn').addEventListener('click', () => {
+    const buttons = document.querySelectorAll('.qty-btn[data-name]');
+    const itemMap = new Map();
+
+    buttons.forEach(button => {
+        const name = button.getAttribute('data-name');
+        const price = parseInt(button.getAttribute('data-price'));
+        const qtyDisplay = button.parentElement.querySelector('.qty-display');
+        const quantity = parseInt(qtyDisplay.textContent);
+
+        if (quantity > 0 && !itemMap.has(name)) {
+            itemMap.set(name, {
+                name,
+                quantity,
+                price,
+                total: quantity * price
+            });
+        }
+    });
+
+    const selectedItems = Array.from(itemMap.values());
+    const orderId = '#' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+    localStorage.setItem('orderId', orderId);
+    localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+
+    window.location.href = 'paymentrevisi.php';
+});
 
         // Initialize
         updateDisplay();
