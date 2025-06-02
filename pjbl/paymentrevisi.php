@@ -196,118 +196,7 @@
             z-index: 1;
         }
 
-        /* QR Button - Enhanced */
-        .qr-button-container {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.btn-qr {
-    padding: 14px;
-    background: #280137;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 8px;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-qr::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.btn-qr:hover::before {
-    left: 100%;
-}
-
-.btn-qr:hover {
-    background: #3d1a4f;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(40, 1, 55, 0.25);
-}
-
-.btn-qr:active {
-    transform: translateY(0);
-}
-
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.popup-overlay.show {
-    display: flex;
-    opacity: 1;
-    visibility: visible;
-}
-
-.popup-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 20px;
-    text-align: center;
-    position: relative;
-    max-width: 400px;
-    width: 90%;
-    transform: scale(0.7);
-    transition: transform 0.3s ease;
-}
-
-.popup-overlay.show .popup-content {
-    transform: scale(1);
-}
-
-.popup-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #666;
-    transition: color 0.3s;
-}
-
-.popup-close:hover {
-    color: #333;
-}
-
-.popup-content h2 {
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-}
-
-.popup-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+        
 
         /* Content Layout - Enhanced Responsive */
         .content-layout {
@@ -571,6 +460,7 @@
             color:rgb(125, 125, 125);
             font-size: 15px;
             transition: color 0.3s;
+            text-decoration: none;
         }
 
         .footer-link:hover {
@@ -659,16 +549,7 @@
     </div>
 
         
-    <div class="qr-button-container">
-            <button class="btn-qr" onclick="showQrPopup()"> Lihat Code QR</button>
-        </div>
-        <!-- QR Code Popup -->
-    <div class="popup-overlay" id="qrPopup">
-        <div class="popup-content">
-            <button class="popup-close" onclick="hideQrPopup()">✕</button>
-            <img id="qrImage" src="" alt="QR Code untuk Pembayaran">
-        </div>
-    </div>
+    
         <div class="content-layout">
             <!-- Left Section - Form -->
             <div class="form-section">
@@ -766,41 +647,9 @@
     
     <script>
         
-        function showQrPopup() {
-            // Dummy: ambil QR dari Midtrans
-            const qrUrl = "https://dummyimage.com/200x200/000/fff&text=QR+Midtrans";
-            document.getElementById("qrImage").src = qrUrl;
-            const popup = document.getElementById("qrPopup");
-            popup.style.display = "flex";
-            // Give the browser a moment before applying the animation class
-            setTimeout(() => {
-                popup.classList.add("show");
-            }, 10);
-        }
+        
 
-        function hideQrPopup() {
-            const popup =document.getElementById("qrPopup");
-            popup.classList.remove("show");
-            // Wait for animation to finish before hiding
-            setTimeout(() => {
-                popup.style.display = "none";
-            }, 300);
-        }
-
-        // Close popup when clicking outside of it
-        document.getElementById('qrPopup').addEventListener('click', function(e) {
-            if (e.target === this) {
-                hidePopup();
-            }
-        });
-
-        // Close popup with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                hidePopup();
-            }
-        });
-
+        
         // Order confirmation function
         function kirimPesanan() {
             // Get form data
