@@ -705,7 +705,8 @@
             }
         }
 
-        function updateOrderSummary() {
+        // Menampilkan ringkasan pesanan di checkout
+function updateOrderSummary() {
     const orderSummary = document.getElementById('orderSummary');
     const checkoutBtn = document.getElementById('checkout-btn');
     
@@ -758,22 +759,21 @@
     summaryHTML += `
         <div class="order-total">
             <span class="total-label">Total</span>
-            <span class="total-amount">IDR ${total.toLocaleString()}</span>
-        </div>
-    `;
+            <span class="total-amount" id="checkout-total">IDR ${total.toLocaleString()}</span>
+        `;
 
     orderSummary.innerHTML = summaryHTML;
     checkoutBtn.disabled = false;
 }
 
-
-// Aktifkan tombol jika item ditambah atau dikurangi
+// Fungsi menambah kuantitas
 function increase(btn) {
     const qtyDisplay = btn.parentElement.querySelector('.qty-display');
     qtyDisplay.textContent = parseInt(qtyDisplay.textContent) + 1;
     updateOrderSummary();
 }
 
+// Fungsi mengurangi kuantitas
 function decrease(btn) {
     const qtyDisplay = btn.parentElement.querySelector('.qty-display');
     const qty = parseInt(qtyDisplay.textContent);
@@ -783,8 +783,11 @@ function decrease(btn) {
     updateOrderSummary();
 }
 
-
 // Checkout dan simpan ke localStorage
+// Button harus memiliki id="checkout-btn" di HTML
+// Tambahkan elemen HTML <div id="orderSummary"></div> untuk ringkasan pesanan
+// Pastikan menu item memiliki tombol dengan class "qty-btn" dan atribut data-name serta data-price
+
 document.getElementById('checkout-btn').addEventListener('click', () => {
     const buttons = document.querySelectorAll('.qty-btn[data-name]');
     const itemMap = new Map();
@@ -807,12 +810,15 @@ document.getElementById('checkout-btn').addEventListener('click', () => {
 
     const selectedItems = Array.from(itemMap.values());
     const orderId = '#' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    const totalHarga = document.getElementById("checkout-total").innerText;
 
     localStorage.setItem('orderId', orderId);
     localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+    localStorage.setItem('totalHarga', totalHarga);
 
     window.location.href = 'paymentrevisi.php';
 });
+
 
         // Initialize
         updateDisplay();
